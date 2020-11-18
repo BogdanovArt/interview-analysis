@@ -1,0 +1,36 @@
+@import "src/globals/variables.scss";
+.text-block {
+  color: #2a2d39;
+  font-size: 14px;
+  padding: 10px;
+  margin: 10px 0;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: $shadow;
+  border: $bor;
+  user-select: text;
+  &:nth-child(odd) {
+    box-shadow: none;
+    color: #5392b6;
+  }
+  .atom{
+    border-radius: 5px;
+    padding: 0 5px;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .unit-green {
+    background: $type1;
+  }
+  .unit-red {
+    background: $type2;
+  }
+  .unit-orange {
+    background: $type3;
+  }
+  .unit-blue {
+    background: $type4;
+  }
+}
+

@@ -1,0 +1,23 @@
+.Element {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 3px;
+  &:hover {
+    background: #f2f2f2;
+  }
+}
+
+.Title{
+  color: red;
+  margin-right: 10px;
+  max-width: 200px;
+  overflow: hidden;
+}
+
+.Date {
+  color: gray;
+  font-size: 12px;
+}

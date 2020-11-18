@@ -1,0 +1,58 @@
+version: '3.4'
+services:
+  mongodb:
+    build:
+      context: ./docker/mongodb
+      dockerfile: Dockerfile
+    volumes:
+      - ./db:/data/db
+    restart: always
+  node_server:
+    build:
+      context: ./docker/node_server
+      dockerfile: Dockerfile
+      args:
+        server_uid: "${HOST_UID}"
+    volumes:
+      - /etc/localtime:/etc/localtime/:ro
+      - type: bind
+        source: ./server/
+        target: /server/
+    links:
+      - mongodb
+    command: "sudo -u node bash /scripts/start.sh"
+    restart: always
+
+  node_client:
+    build:
+      context: ./docker/node_client
+      dockerfile: Dockerfile
+      args:
+        server_uid: "${HOST_UID}"
+    volumes:
+      - /etc/localtime:/etc/localtime/:ro
+      - type: bind
+        source: ./public/
+        target: /public/
+    command: "sudo -u node bash /scripts/start.sh"
+    restart: always
+
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+      args:
+        server_uid: "${HOST_UID}"
+    volumes:
+      - /etc/localtime:/etc/localtime/:ro
+      - ./.env:/etc/.env:ro
+      - ./logs/nginx:/var/log/nginx
+    ports:
+      - "${EXT_HTTP_PORT:-80}:80"
+      - "${EXT_HTTPS_PORT:-443}:443"
+    links:
+      - node_server
+      - node_client
+    restart: always
+
+

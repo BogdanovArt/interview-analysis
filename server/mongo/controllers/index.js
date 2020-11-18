@@ -1,0 +1,27 @@
+const getInterviews = require('./getInterviews').getInterviews;
+const putInterview = require('./putInterview').putInterview;
+const changeInterview = require('./changeInterview').changeInterview;
+const changeProject = require('./changeProject').changeProject;
+const deleteInterview = require('./deleteInterview').deleteInterview;
+const getInterview = require('./getInterview').getInterview;
+const getProjects = require('./getProjects').getProjects;
+const getProject = require('./getProject').getProject;
+const putProject = require('./putProject').putProject;
+const putAtom = require('./putAtom').putAtom;
+const changeAtom = require('./changeAtom').changeAtom;
+const deleteAtom = require('./deleteAtom').deleteAtom;
+const deleteProject = require('./deleteProject').deleteProject;
+
+exports.getInterviews = getInterviews;
+exports.putInterview = putInterview;
+exports.changeInterview = changeInterview;
+exports.changeProject = changeProject;
+exports.deleteInterview = deleteInterview;
+exports.getInterview = getInterview;
+exports.getProjects = getProjects;
+exports.getProject = getProject;
+exports.putProject = putProject;
+exports.putAtom = putAtom;
+exports.changeAtom = changeAtom;
+exports.deleteAtom = deleteAtom;
+exports.deleteProject = deleteProject;

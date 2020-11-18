@@ -1,0 +1,32 @@
+@import "src/globals/variables.scss";
+
+.Container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.TextArea {
+  width: 100%;
+  height: 200px;
+  box-sizing: border-box;
+  padding: 10px;
+  resize: vertical;
+}
+.workspace {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  user-select: none;
+  outline: none;
+}
+
+.BreadCrumbs{
+  display: flex;
+  > * {
+    margin-right: 6px;
+  }
+  > a {
+    color: green;
+    text-decoration: none;
+  }
+}
+

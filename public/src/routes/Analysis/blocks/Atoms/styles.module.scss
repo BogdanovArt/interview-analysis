@@ -1,0 +1,98 @@
+@import "src/globals/variables.scss";
+.Copy {
+  margin: 0 10px 5px 10px;
+  padding: 5px 10px;
+  font-weight: bold;
+  background: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+  color: gray;
+  border: $bor;
+  border-color: gray;
+  box-shadow: $shadow;
+  transition: .2s;
+  &:hover {
+    color: #262626;
+  }
+}
+.Cell {
+  position: sticky;
+  top: 0;
+  right: 0;
+  max-height: 100vh;
+  min-width: 350px;
+  overflow-y: auto;
+  overflow-x: visible;
+}
+.Atom {
+  display: inline-block;
+  border-radius: 5px;
+  padding: 2px 5px;
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.Heading {
+  position: absolute;
+  top: -10px;
+  background: #fff;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.Molecule {
+  position: relative;
+  font-size: 12px;
+  $w: 300px;
+  margin: 10px;
+  background: #fff;
+  box-shadow: $shadow;
+  border: $bor;
+  border-radius: 5px;
+  padding: 8px;
+  min-width: $w;
+  max-width: $w;
+  width: $w;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.unit-green {
+  color: $type1;
+  border: 1px solid $type1;
+  .Atom {
+    background: $type1;
+    color: #fff;
+  }
+}
+.unit-red {
+  color: $type2;
+  border: 1px solid $type2;
+  .Atom {
+    background: $type2;
+    color: #fff;
+  }
+}
+.unit-orange {
+  color: $type3;
+  border: 1px solid $type3;
+  .Atom {
+    background: $type3;
+    color: #fff;
+  }
+}
+.unit-blue {
+  color: $type4;
+  border: 1px solid $type4;
+  .Atom {
+    background: $type4;
+    color: #fff;
+  }
+}
+
