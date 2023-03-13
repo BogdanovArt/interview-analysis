@@ -5,25 +5,50 @@
   flex-direction: column;
   position: sticky;
   bottom: 0px;
-  border: 1px solid $border-color;
-  border-radius: 6px;
   pointer-events: none;
+  height: 180px;
   opacity: 0;
+  border: 1px solid $border-color;
   background-color: $bg-color;
-  text-align: center;
   user-select: none;
-  transform: translateY(10px);
   transition: $trns;
-  overflow: hidden;
+  &Content {
+    // border: 1px solid $border-color;
+    // border-radius: 6px;
+  }
+  &Disabled {
+    pointer-events: none;
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: #ffffff90;
+      cursor: default;
+    }
+  }
   &Selection {
+    text-align: center;
     min-height: 20px;
     color: $hint-color;
     background-color: $bg-secondary;
   }
+  &Extender {
+    position: absolute;
+    width: 80px;
+    top:0;
+    bottom: 0;
+    // border: 1px solid red;
+    &Left {
+      left: -80px;
+    }
+    &Right {
+      right: -80px;
+    }
+  }
   &Active {
     pointer-events: all;
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0px);
   }
   &Hint {
     display: flex;
@@ -32,30 +57,33 @@
     font-size: 12px;
     background-color: $bg-secondary;
     padding: 10px;
-    color: $hint-color;
     &Block {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 5px;
+      color: $hint-color;
     }
     &Key {
+      $highlight: #ffffff50;
+      $shadow: #00000040;
       // color: $text-color;
+      font-size: 10px;
       background-color: rgba(211, 211, 211, 0.398);
       box-sizing: border-box;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-width: 30px;
-      padding: 0 7px;
-      height: 25px;
-      border-radius: 6px;
-      border: 4px solid green;
-      border-top-color: $bg-color;
-      border-left-color: $bg-color;
-      border-bottom-color: $border-color;
-      border-right-color: $border-color;
-      outline: 1px solid $border-color;
+      min-width: 20px;
+      padding: 4px;
+      height: 20px;
+      border-radius: 4px;
+      border: 2px solid green;
+      border-top-color: $highlight;
+      border-left-color: $highlight;
+      border-bottom-color: $shadow;
+      border-right-color: $shadow;
+      outline: 1px solid $shadow;
     }
   }
   &Buttons {
@@ -78,9 +106,14 @@
     &[data-type="7"] {
       color: $blue;
     }
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    padding: 5px;
+    gap: 5px;
+    min-height: 35px;
     background-color: $bg-color;
-    height: 25px;
     border-radius: 4px;
     border-width: 1px;
     border-style: solid;
@@ -112,8 +145,22 @@
         background-color: $blue;
       }
     }
+    &Type {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      gap: 0;
+    }
     &Ok {
       margin-left: auto;
+    }
+    &Hint {
+      font-size: 10px;
+      opacity: 0.7;
+      // color: $hint-color;
+    }
+    &Title {
+      // margin-left: 10px;
     }
   }
 }

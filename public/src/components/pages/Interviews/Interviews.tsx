@@ -14,14 +14,10 @@ import { AddModal } from "./blocks/AddInterviewModal";
 
 import { AppDispatch } from "store/index";
 import { setInterviewsData } from "store/interviews";
-import {
-  addInterview,
-  editInterview,
-  requestInterviews,
-  requestUnbound,
-} from "store/interviews/actions";
+import { addInterview, editInterview, requestInterviews, requestUnbound } from "store/interviews/actions";
 import { getInterviewsData } from "store/interviews/getters";
-import { AddPayload, InterviewSchema } from "store/interviews/types";
+import { AddInterviewPayload } from "store/interviews/types";
+import { InterviewSchema } from "store/interview/types";
 
 import { defaultCrumbs } from "utils/consts";
 
@@ -57,22 +53,16 @@ export const Interviews = (props: RouteComponentProps<Params>) => {
     }
   };
 
-  const createHandler = async (name: string, interview: string) => {
-    // console.warn(name, interview, content, "created emu");
-
+  const createHandler = async (name: string, source: string[], respondent?: string) => {
     // @TODO implement JSON / HTML(?) import.
 
-    const payload: AddPayload = {
+    const payload: AddInterviewPayload = {
       title: name,
       project_id: id,
-      content: {
-        text: {
-          id: 0,
-          text: interview,
-        },
-        atoms: [],
-      },
+      respondent,
+      source,
     };
+
     await dispatch(addInterview(payload));
     dispatch(requestInterviews({ id }));
     setAddModal(false);
@@ -89,21 +79,15 @@ export const Interviews = (props: RouteComponentProps<Params>) => {
 
   return (
     <div className={styles.Interviews}>
-      <Breadcrumbs list={[...defaultCrumbs, { title: content.name }]} />
-      <div className={styles.InterviewsTitle}>{content.name}</div>
+      <Breadcrumbs list={[...defaultCrumbs, { title: content.title }]} />
+      <div className={styles.InterviewsTitle}>{content.title}</div>
       <div className={styles.InterviewsList}>
         {content.interviews
-          ? content.interviews.map((interview) => (
-              <Interview key={interview._id} interview={interview} />
-            ))
+          ? content.interviews.map((interview) => <Interview key={interview._id} interview={interview} />)
           : null}
       </div>
       <div className={styles.InterviewsControls}>
-        <Button
-          variant="contained"
-          color="success"
-          onClick={() => setAddModal(true)}
-        >
+        <Button variant="contained" color="success" onClick={() => setAddModal(true)}>
           <Plus /> Новое интервью
         </Button>
 
@@ -113,24 +97,11 @@ export const Interviews = (props: RouteComponentProps<Params>) => {
         </Button>
       </div>
       <Portal>
-        <AddModal
-          show={addModal}
-          title="Новое интервью"
-          onClose={() => setAddModal(false)}
-          onConfirm={createHandler}
-        />
-        <Modal
-          show={!!unbound.length}
-          title="Привязать интервью"
-          onClose={() => setUnbound([])}
-        >
+        <AddModal show={addModal} title="Новое интервью" onClose={() => setAddModal(false)} onConfirm={createHandler} />
+        <Modal show={!!unbound.length} title="Привязать интервью" onClose={() => setUnbound([])}>
           <div>
             {unbound.map((interview) => (
-              <div
-                key={interview._id}
-                className={styles.InterviewsUnbound}
-                onClick={() => bindHandler(interview._id)}
-              >
+              <div key={interview._id} className={styles.InterviewsUnbound} onClick={() => bindHandler(interview._id)}>
                 {interview.title}
               </div>
             ))}

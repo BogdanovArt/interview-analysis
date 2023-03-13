@@ -11,33 +11,21 @@ interface Props {
   label?: string;
   initial?: string;
   onClose?: () => void;
-  onConfirm?: (name: string, content: string) => void;
+  onConfirm?: (name: string, content: string[], respondent?: string) => void;
 }
 
-export const AddModal = ({
-  show,
-  title,
-  label,
-  initial,
-  onConfirm = () => null,
-  onClose = () => null,
-}: Props) => {
+export const AddModal = ({ show, title, label, initial, onConfirm = () => null, onClose = () => null }: Props) => {
   const [name, setName] = useState(initial || "");
   const [content, setContent] = useState("");
+  const [respondent, setRespondent] = useState("");
 
   const confirmHandler = () => {
-    onConfirm(name, stringToHtml(content));
-  }
-
-  const stringToHtml = (text: string) => {
-    const array = text.split("\n");
-    return array.join("\n \n ");
+    onConfirm(name, stringToArray(content), respondent);
   };
 
-  useEffect(() => {
-    setName(initial || "");
-    setContent("");
-  }, [show]);
+  const stringToArray = (text: string) => {
+    return text.split("\n");
+  };
 
   return (
     <Modal title={title} show={show} onClose={onClose}>
@@ -51,6 +39,13 @@ export const AddModal = ({
           onChange={(e) => setName(e.target.value)}
         />
         <TextField
+          color="success"
+          value={respondent}
+          label={"Введите имя респондента"}
+          multiline
+          onChange={(e) => setRespondent(e.target.value)}
+        />
+        <TextField
           required
           color="success"
           value={content}
@@ -62,12 +57,7 @@ export const AddModal = ({
           onChange={(e) => setContent(e.target.value)}
         />
         <div className={styles.ModalControls}>
-          <Button
-            disabled={!name || !content}
-            variant="contained"
-            color="success"
-            onClick={confirmHandler}
-          >
+          <Button disabled={!name || !content} variant="contained" color="success" onClick={confirmHandler}>
             ok
           </Button>
 

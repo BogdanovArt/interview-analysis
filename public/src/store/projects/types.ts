@@ -1,9 +1,12 @@
+import { InterviewSchema } from "store/interview/types";
+import { Populated } from "types/index";
+
 export interface ProjectsState {
   data: ProjectSchema[];
 }
 
 export interface AddPayload {
-  name: string;
+  title: string;
 }
 
 export interface RemovePayload {
@@ -12,32 +15,27 @@ export interface RemovePayload {
 
 export interface EditPayload {
   id: string;
-  name: string;
+  title: string;
 }
 
 export interface ProjectSchema {
   _id: string;
-  name: string;
+  title: string;
   created: Date;
   interviews: InterviewSchema[];
-  atoms: AtomSchema[];
-}
-
-export interface InterviewSchema {
-  _id?: string;
-  date?: string;
-  title?: string;
-  content: AnalysisSchema;
-}
-
-export interface AnalysisSchema {
-  text: TextBlockSchema;
-  atoms: AtomSchema[];
 }
 
 export interface TextBlockSchema {
-  id: number;
-  text: string;
+  _id: string;
+  interview_id: Populated<InterviewSchema>;
+  nodes?: Array<Populated<AtomNodeSchema>>;
+  order: number;
+  content: string;
+  source: string;
+}
+
+export interface TextBlockPayload {
+  source: string;
 }
 
 export interface AtomSchema {
@@ -48,9 +46,9 @@ export interface AtomSchema {
   nodes?: AtomNodeSchema[];
 }
 
-export interface AtomNodeSchema {  
+export interface AtomNodeSchema {
   DOM_id: string;
   _id: string;
   atom_id: string;
+  block_id: string;
 }
-

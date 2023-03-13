@@ -1,0 +1,8 @@
+@import "assets/scss/variables";
+
+.Edit {
+  border: 1px solid red;
+  &Content {
+    grid-template-columns: 100%;
+  }
+}

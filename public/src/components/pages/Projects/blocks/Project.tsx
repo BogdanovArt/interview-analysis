@@ -27,8 +27,8 @@ export const Project = ({ project }: { project: ProjectSchema }) => {
 
   const dispatch = useDispatch();
 
-  const editHandler = async (name: string) => {
-    await dispatch(editProject({ name, id: project._id }));
+  const editHandler = async (title: string) => {
+    await dispatch(editProject({ title, id: project._id }));
     resetState();
     dispatch(requestProjects());
   };
@@ -51,7 +51,7 @@ export const Project = ({ project }: { project: ProjectSchema }) => {
             to={routes.project.replace(":project", project._id)}
             className={styles.ProjectTitle}
           >
-            <div>{project.name}</div>
+            <div>{project.title}</div>
           </Link>
           <IconButton onClick={() => setModal(true)}>
             <Edit />
@@ -65,8 +65,8 @@ export const Project = ({ project }: { project: ProjectSchema }) => {
       <Portal>
         <ProjectsModal
           show={modal}
-          title={`Изменить имя проекта "${project.name}"`}
-          initial={project.name}
+          title={`Изменить имя проекта "${project.title}"`}
+          initial={project.title}
           label="Введите название проекта"
           onClose={resetState}
           onConfirm={editHandler}

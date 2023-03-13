@@ -23,8 +23,8 @@ export const Projects = () => {
 
   const [modal, setModal] = useState(false);
 
-  const addHandler = async (name: string) => {
-    await dispatch(addProject({ name }));
+  const addHandler = async (title: string) => {
+    await dispatch(addProject({ title }));
     dispatch(requestProjects());
     resetState();
   };

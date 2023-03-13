@@ -1,12 +1,28 @@
 @import "assets/scss/variables";
 
-.Analysis {
+.Interview {
   display: flex;
   flex-direction: column;
   gap: 20px;
   &Title {
+    display: flex;
+    justify-content: space-between;
     font-size: 32px;
     user-select: none;
+  }
+  &Link {
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    border-radius: 6px;
+    border: 1px solid $text-color;
+    font-size: 16px;
+    color: $text-color;
+    text-decoration: none;
+    &:hover {
+      color: $accent-color;
+      border-color: $accent-color;
+    }
   }
   &Content {
     display: grid;
@@ -22,5 +38,19 @@
     gap: 10px;
     outline: none;
     word-break: normal;
+  }
+}
+
+.Cloud {
+  &Wrapper {
+    > * {
+      position: sticky;
+      top: 20px;
+      max-height: 100vh;
+      overflow-y: auto;
+      overflow-x: visible;
+      margin-top: -15px;
+      padding-top: 15px;
+    }
   }
 }

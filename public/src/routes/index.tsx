@@ -2,10 +2,11 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import { Interviews } from "components//pages/Interviews/Interviews";
 import { Projects } from "components/pages/Projects/Projects";
+import { Analysis } from "components/pages/Analysis/Analysis";
+import { Edit } from "components/pages/Edit/Edit";
 
 
 import { routes } from "./enums";
-import { Analysis } from "components/pages/Analysis/Analysis";
 
 const Guard = () => <Redirect to={routes.projects} />;
 
@@ -17,6 +18,10 @@ const Routes = [
   {
     component: Projects,
     path: routes.projects,
+  },
+  {
+    component: Edit,
+    path: routes.edit,
   },
   {
     component: Interviews,

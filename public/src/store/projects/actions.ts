@@ -39,7 +39,7 @@ export const editProject =
   async () => {
     await axios({
       url: getApiUrl(routes.project.replace(":project", payload.id)),
-      method: RequestMethods.PUT,
+      method: RequestMethods.PATCH,
       data: payload,
     });
   };

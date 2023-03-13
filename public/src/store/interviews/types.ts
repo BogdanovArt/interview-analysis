@@ -1,38 +1,15 @@
-import {
-  AnalysisSchema,
-  AtomSchema,
-  TextBlockSchema,
-} from "store/projects/types";
-import { IBasicObject } from "types/index";
+import { AtomSchema, ProjectSchema, TextBlockSchema } from "store/projects/types";
+import { IBasicObject, Populated } from "types/index";
 
 export interface InterviewsState {
-  project: ProjectData | null;
+  project: ProjectSchema | null;
 }
 
-export interface ProjectData {
-  _id?: string;
-  name?: string;
-  created?: Date;
-  project_id?: string;
-  interviews: InterviewSchema[];
-  atoms: AtomSchema[];
-}
-
-export interface InterviewSchema {
-  _id?: string;
-  date?: string;
-  title?: string;
-  project_id?: string;
-  content: AnalysisSchema;
-}
-
-export interface AddPayload {
+export interface AddInterviewPayload {
   project_id: string;
   title: string;
-  content: {
-    text: TextBlockSchema;
-    atoms: AtomSchema[];
-  };
+  respondent?: string;
+  source: string[];
 }
 
 export interface RemovePayload {

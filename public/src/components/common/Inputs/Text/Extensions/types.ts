@@ -13,7 +13,6 @@ export interface AtomUnit {
   title: string;
   cssClass: string;
   htmlTag: string;
-  key?: string;
 }
 
 export type AtomTypesData = {
@@ -30,6 +29,7 @@ export interface AtomNodeData {
   atom_type: number;
   atom_id: string;
   content: string;
-  unit_id: string;
+  node_id: string;
+  block_id: string;
 }
 

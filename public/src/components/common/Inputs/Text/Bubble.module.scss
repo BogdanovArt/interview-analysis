@@ -1,0 +1,7 @@
+@use "assets/scss/mixins";
+@import "assets/scss/variables";
+
+.Bubble {
+  @include mixins.bubble;
+  @include mixins.atoms;
+}

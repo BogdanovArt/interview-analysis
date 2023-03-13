@@ -1,33 +1,38 @@
-import { useRef } from "react";
-import { EditorID } from "utils/consts";
+import { useMemo, useRef } from "react";
 
-import {
-  autoSelection,
-} from "utils/textControls";
+import { TextBlockSchema } from "store/projects/types";
+import { EditorID, selectionTypes } from "utils/consts";
+
+import { autoSelection } from "utils/textControls";
 
 import styles from "./Editor.module.scss";
 
 interface Props {
-  id: number;
-  initial?: string;
+  blocks: TextBlockSchema[];
   readonly?: boolean;
   onSelect?: (payload: any) => void;
 }
 
-export const AtomicEditor = ({ initial, id, onSelect }: Props) => {
+export const AtomicEditor = ({ blocks, onSelect = () => null }: Props) => {
   const editor = useRef(null);
 
   const mouseUpHandler = () => {
     const { range, nodes, type } = autoSelection();
 
     const pl = {
-      id,
       type,
       nodes,
     };
 
-    onSelect(pl);
+    setTimeout(() => {
+      // is to fix selection "resetting" after clicking on already selected text native browser behaviour
+      onSelect(pl);
+    }, 0);
   };
+
+  const content = useMemo(() => {
+    return blocks.map((block) => `<bubble id=${block._id}>${block.content}</bubble>`).join("\n\n");
+  }, [blocks]);
 
   return (
     <div className={styles.Wrapper}>
@@ -35,10 +40,9 @@ export const AtomicEditor = ({ initial, id, onSelect }: Props) => {
         <div
           ref={editor}
           id={EditorID}
-          data-id={id}
           data-type={"text-block"}
           className={styles.EditorWorkspace}
-          dangerouslySetInnerHTML={{ __html: initial }}
+          dangerouslySetInnerHTML={{ __html: content }}
           onDragStart={(e) => e.preventDefault()}
           onMouseUp={mouseUpHandler}
         />

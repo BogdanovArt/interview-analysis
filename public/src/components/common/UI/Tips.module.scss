@@ -1,0 +1,35 @@
+@import "assets/scss/variables.scss";
+
+.Tips {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  // bottom: calc(100% + 10px);
+  bottom: 100%;
+  gap: 10px;
+  padding: 15px 10px;
+  border-radius: 5px;
+  border: 1px solid $border-color;
+  background-color: $bg-color;
+  &Block {
+    display: flex;
+    flex-direction: column;
+    flex-basis: calc((100% / 3) - 21px);
+    gap: 6px;
+    padding: 8px 6px;
+    border-radius: 5px;
+    border: 1px solid $border-color;
+    &Line {
+      display: flex;
+      flex-wrap: nowrap;
+    }
+    &Hint {
+      word-break: normal;
+      font-size: 12px;
+      color: $accent-color;
+    }
+    span {
+      margin: 0 4px;
+    }
+  }
+}

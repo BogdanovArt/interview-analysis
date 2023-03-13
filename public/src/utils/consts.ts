@@ -1,7 +1,6 @@
 import { AtomTypesData } from "components/common/Inputs/Text/Extensions/types";
 
-export const defaultError =
-  "При запросе на сервер произошла ошибка, или сервер вернул некорректные данные";
+export const defaultError = "При запросе на сервер произошла ошибка, или сервер вернул некорректные данные";
 
 export const defaultCrumbs = [
   {
@@ -55,7 +54,8 @@ export const AtomTypes: AtomTypesData = {
   },
 };
 
-export const escapeChars = [" ", ".", ",", ";", "?", "!", "(", ")", "'", '"', "—", "\n"];
+export const escapeChars = [".", "..", "…", "...", "....", ",", ";", "?", "!", "(", ")", "'", '"', "—", "\n"];
+export const trimChars = [...escapeChars, String.fromCharCode(160), " "];
 
 export const selectionTypes = {
   empty: "Empty",
@@ -64,6 +64,19 @@ export const selectionTypes = {
   units: "Units",
 };
 
+export const allowedKeys = [
+  "ArrowLeft",
+  "ArrowRight",
+  "ArrowUp",
+  "ArrowDown",
+  "Escape",
+  "Alt",
+  "Tab",
+  "Control",
+  "Shift",
+  "CapsLock",
+];
+
 export const EditorID = "editor-text-block";
 
-export const tags = Object.values(AtomTypes).map(type => type.htmlTag);
+export const tags = Object.values(AtomTypes).map((type) => type.htmlTag);

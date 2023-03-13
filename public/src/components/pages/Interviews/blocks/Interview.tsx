@@ -11,12 +11,13 @@ import { Portal } from "components/common/Modal/Portal";
 import { ProjectsModal } from "components/pages/Projects/blocks/ProjectsModal";
 
 import { routes } from "routes/enums";
-import { InterviewSchema } from "store/interviews/types";
+
 import {
   editInterview,
   removeInterview,
   requestInterviews,
 } from "store/interviews/actions";
+import { InterviewSchema } from "store/interview/types";
 
 import styles from "components/pages/Projects/blocks/Project.module.scss";
 
@@ -33,13 +34,13 @@ export const Interview = ({ interview }: Props) => {
     await dispatch(
       editInterview({ id: interview._id, interview: { unbind: true } })
     );
-    dispatch(requestInterviews({ id: interview.project_id }));
+    dispatch(requestInterviews({ id: interview.project_id as string }));
   };
 
   const deleteHandler = async () => {
     if (confirm("Действительно удалить интервью ?")) {
       await dispatch(removeInterview({ id: interview._id }));
-      dispatch(requestInterviews({ id: interview.project_id }));
+      dispatch(requestInterviews({ id: interview.project_id as string }));
     }
   };
 
@@ -47,7 +48,7 @@ export const Interview = ({ interview }: Props) => {
     await dispatch(
       editInterview({ id: interview._id, interview: { title: name } })
     );
-    dispatch(requestInterviews({ id: interview.project_id }));
+    dispatch(requestInterviews({ id: interview.project_id as string }));
     setModal(false);
   };
 

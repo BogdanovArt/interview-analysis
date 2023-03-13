@@ -1,4 +1,4 @@
-@import 'assets/scss/variables';
+@import "assets/scss/variables";
 
 @mixin title {
   font-family: $title-font;
@@ -11,4 +11,54 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@mixin bubble {
+  display: block;
+  border-radius: 6px;
+  padding: 5px 10px;
+  &::selection {
+    color: #fff;
+    background-color: royalblue;
+  }
+  &:nth-child(odd) {
+    margin-right: 20px;
+    background: $paleGreen;
+    font-style: italic;
+  }
+  &:nth-child(even) {
+    margin-left: 20px;
+    background-color: $paleBlue;
+  }
+}
+
+@mixin bubbles {
+  bubble {
+    @include bubble;
+  }
+}
+
+@mixin atoms {
+  [data-node-type="atom"] {
+    color: $bg-color;
+    border-radius: 5px;
+    padding: 0 5px;
+    cursor: pointer;
+  }
+  [data-atom_type="1"],
+  [data-atom_type="2"] {
+    background: $green;
+  }
+  [data-atom_type="3"],
+  [data-atom_type="4"] {
+    background: $red;
+  }
+  [data-atom_type="5"] {
+    background: $orange;
+  }
+  [data-atom_type="7"],
+  [data-atom_type="8"],
+  [data-atom_type="6"] {
+    background: $blue;
+  }
 }

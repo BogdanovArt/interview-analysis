@@ -1,3 +1,4 @@
+@use "assets/scss/mixins";
 @import "assets/scss/variables";
 
 .Editor {
@@ -8,41 +9,19 @@
     display: block;
   }
   &Workspace {
-    white-space: pre-line;
-    // user-select: none;
-    // * {
-    //   user-select: text;
-    // }
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
   &:not(:last-child) {
     margin-bottom: 4px;
   }
+
   p {
     margin: 0;
     display: inline-block;
   }
-  :global {
-    [data-node-type="atom"] {
-      color: $bg-color;
-      border-radius: 5px;
-      padding: 0 5px;
-      cursor: pointer;
-    }
-    [data-atom_type="1"],
-    [data-atom_type="2"] {
-      background: $green;
-    }
-    [data-atom_type="3"],
-    [data-atom_type="4"] {
-      background: $red;
-    }
-    [data-atom_type="5"] {
-      background: $orange;
-    }
-    [data-atom_type="7"],
-    [data-atom_type="8"],
-    [data-atom_type="6"] {
-      background: $blue;
-    }
-  }
+
+  @include mixins.bubbles;
+  @include mixins.atoms;
 }

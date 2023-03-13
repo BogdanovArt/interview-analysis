@@ -7,8 +7,8 @@ import { routes } from "routes/enums";
 
 import getApiUrl from "utils/getApiUrl";
 import { RequestMethods } from "types/enums";
-import { AddPayload, EditPayload, RemovePayload } from "./types";
-import { InterviewSchema } from "store/interviews/types";
+import { AddInterviewPayload, EditPayload, RemovePayload } from "./types";
+import { InterviewSchema } from "store/interview/types";
 
 export const requestInterviews =
   ({ id }: { id: string }): AppThunk =>
@@ -25,7 +25,7 @@ export const requestUnbound =
   };
 
 export const addInterview =
-  (payload: AddPayload): AppThunk =>
+  (payload: AddInterviewPayload): AppThunk =>
   async () => {
     await axios({
       url: getApiUrl("/interviews"),
@@ -49,7 +49,7 @@ export const editInterview =
   async () => {
     await axios({
       url: getApiUrl(`/interviews/${payload.id}`),
-      method: RequestMethods.PUT,
+      method: RequestMethods.PATCH,
       data: payload.interview,
     });
   };
