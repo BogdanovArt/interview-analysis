@@ -1,0 +1,14 @@
+@import 'assets/scss/variables';
+
+@mixin title {
+  font-family: $title-font;
+  font-size: 32px;
+  line-height: 32px;
+  font-weight: 700;
+}
+
+@mixin flexc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,14 @@
+
+.Modal {
+  &Content {
+    display: flex;
+    flex-direction: column;
+    min-width: 400px;
+    gap: 20px;
+  }
+  &Controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+}

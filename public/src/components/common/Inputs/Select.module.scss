@@ -1,0 +1,29 @@
+@import "assets/scss/variables.scss";
+
+.Container {
+  display: flex;
+  flex-direction: column;
+  > * {
+    padding-right: 0 !important;
+  }
+  label {
+    margin-bottom: 4px;
+  }
+}
+.Select {
+}
+.Wrapper {
+}
+.Input {
+  color: red;
+}
+
+.Icon {
+  position: absolute;
+  display: flex;
+  right: 0;
+  padding: 10px;
+  pointer-events: none;
+  filter: $icon-filter;
+  opacity: 0.4;
+}

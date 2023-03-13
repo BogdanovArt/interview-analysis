@@ -5,7 +5,7 @@ const putInterview = async ({ req, res, models }) => {
       const Interview = new models.Interview({
         title,
         content,
-        project_id
+        project_id,
       });
       const doc = await Interview.save();
 

@@ -1,137 +1,106 @@
-import {ActionCreator, Dispatch} from 'redux';
-import {ThunkAction} from 'redux-thunk';
-import axios from 'axios';
+import axios from "axios";
 
-import {AnalysisDataI, IAnalysisState} from './reducers';
-import {AtomI, TextBlockI} from "routes/Analysis/interfaces";
+import { AppThunk } from "..";
+import {
+  setAnalysisContent,
+  setAnalysis,
+  setTextBlock,
+} from ".";
 
-export enum AnalysisActionTypes {
-  SET_ANALYSIS_DATA = 'SET_ANALYSIS_DATA',
-  SET_TEXT_BLOCK_DATA = 'SET_TEXT_BLOCK_DATA',
-  SET_ATOM_DATA = 'SET_ATOM_DATA',
-  CHANGE_ATOM_DATA = 'SET_ATOM_DATA',
-  REMOVE_ATOM_DATA = 'REMOVE_ATOM_DATA',
-  FETCH_DATA = 'FETCH_DATA',
-}
+import { routes } from "routes/enums";
 
-export interface ISetAnalysisData {
-  type: AnalysisActionTypes.SET_ANALYSIS_DATA;
-  data: AnalysisDataI;
-}
+import { RequestMethods } from "types/enums";
+import {
+  AnalysisSchema,
+  AtomAddPayload,
+  AtomEditPayload,
+} from "store/analysis/types";
+import {
+  AtomNodeSchema,
+  AtomSchema,
+  TextBlockSchema,
+} from "store/projects/types";
 
-export interface IChangeAtomData {
-  type: AnalysisActionTypes.SET_ATOM_DATA  | AnalysisActionTypes.REMOVE_ATOM_DATA | AnalysisActionTypes.CHANGE_ATOM_DATA;
-  data: AtomI;
-}
+import getApiUrl from "utils/getApiUrl";
+import { AtomNodeData } from "components/common/Inputs/Text/Extensions/types";
 
+export const requestAnalysis =
+  ({ id }: { id: string }): AppThunk =>
+  async (dispatch) => {
+    const url = getApiUrl(routes.interview.replace(":id", id));
+    const { data } = await axios.get(url);
+    if (data) dispatch(setAnalysis(data));
+  };
 
-export interface IChangeBlockData {
-  type: AnalysisActionTypes.SET_TEXT_BLOCK_DATA;
-  data: TextBlockI;
-}
+export const requestContent =
+  ({ id }: { id: string }): AppThunk =>
+  async (dispatch) => {
+    const url = getApiUrl(routes.interview.replace(":id", id));
+    const { data }: { data: AnalysisSchema } = await axios.get(url);
+    if (data && data.content) dispatch(setAnalysisContent(data.content));
+  };
 
-export interface IFetchReport {
-  type: AnalysisActionTypes.FETCH_DATA;
-  isFetching: boolean;
-}
+export const editAnalysis =
+  (interview: AnalysisSchema): AppThunk =>
+  async (dispatch) => {
+    const { data, status } = await axios({
+      url: getApiUrl(routes.interview.replace(":id", interview._id)),
+      method: RequestMethods.PUT,
+      data: interview,
+    });
+    if (data) dispatch(setAnalysis(data));
+  };
 
-export type ReportActions = ISetAnalysisData | IFetchReport | IChangeAtomData | IChangeBlockData;
+type EditReturn = Promise<AtomNodeSchema | undefined>;
 
-export const getAnalysisData: ActionCreator<ThunkAction<Promise<any>, IAnalysisState, null, ISetAnalysisData>> = (id: string) => {
-  return async (dispatch: Dispatch) => {
+export const editAtom =
+  (atom: AtomEditPayload): AppThunk<EditReturn> =>
+  async (dispatch) => {
     try {
-      const { data } = await axios({
-        url: '/api/interviews/' + id,
-        method: 'GET',
+      const { data, status } = await axios({
+        url: getApiUrl(routes.atoms),
+        method: RequestMethods.OPTIONS,
+        data: atom,
       });
-      dispatch({ data, type: AnalysisActionTypes.SET_ANALYSIS_DATA });
+
+      return data?.data;
     } catch (err) {
-      console.error(err);
+      console.warn(err);
     }
   };
-};
 
-export const setAnalysisData: ActionCreator<ThunkAction<Promise<any>, IAnalysisState, null, ISetAnalysisData>> = (id: string, data: IAnalysisState) => {
-  return async (dispatch: Dispatch) => {
+type AddReturn = Promise<
+  { node: AtomNodeSchema; atom: AtomSchema } | undefined
+>;
+
+export const addAtom =
+  (atom: AtomAddPayload): AppThunk<AddReturn> =>
+  async (dispatch) => {
     try {
-      await axios({
-        url: '/api/interviews/' + id,
-        method: 'PUT',
-        data
+      const { data, status } = await axios({
+        url: getApiUrl(routes.atoms),
+        method: RequestMethods.PUT,
+        data: atom,
       });
+      return data?.data;
     } catch (err) {
-      console.error(err);
+      console.warn(err);
     }
   };
-};
 
+type DeleteReturn = Promise<{ success: boolean } | undefined>;
 
-export const changeBlock: ActionCreator<ThunkAction<Promise<any>, IAnalysisState, null, ISetAnalysisData>> = (data: TextBlockI) => {
-  return async (dispatch: Dispatch) => {
+export const deleteAtom =
+  (atom: AtomNodeSchema): AppThunk<DeleteReturn> =>
+  async (dispatch) => {
     try {
-      dispatch({ data, type: AnalysisActionTypes.SET_TEXT_BLOCK_DATA });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-};
-
-export const changeAtom: ActionCreator<ThunkAction<Promise<any>, IAnalysisState, null, ISetAnalysisData>> = (data: AtomI) => {
-  return async (dispatch: Dispatch) => {
-    try {
-      const res = await axios({
-        url: '/api/atoms',
-        method: 'OPTIONS',
-        data
+      const { data, status } = await axios({
+        url: getApiUrl(routes.atoms),
+        method: RequestMethods.DELETE,
+        data: atom,
       });
-      if (res.status === 201) {
-        if (res.data.old) {
-          dispatch({ data: res.data.old, type: AnalysisActionTypes.SET_ATOM_DATA });
-        } else {
-          data.deleted = true;
-          dispatch({ data, type: AnalysisActionTypes.REMOVE_ATOM_DATA });
-        }
-        if (res.data.new) {
-          dispatch({ data: res.data.new, type: AnalysisActionTypes.SET_ATOM_DATA });
-        }
-      }
-      return res.data;
+      return data;
     } catch (err) {
-      console.error(err);
+      console.warn(err);
     }
   };
-};
-
-export const addAtom: ActionCreator<ThunkAction<Promise<any>, IAnalysisState, null, ISetAnalysisData>> = (data: AtomI) => {
-  return async (dispatch: Dispatch) => {
-    // console.warn(data, add);
-    try {
-      const res = await axios({
-        url: '/api/atoms',
-        method: 'PUT',
-        data
-      });
-      if (res.status === 201) dispatch({ data: res.data.data, type: AnalysisActionTypes.SET_ATOM_DATA });
-      return res.data.data;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-};
-
-export const deleteAtom: ActionCreator<ThunkAction<Promise<any>, IAnalysisState, null, ISetAnalysisData>> = (data: AtomI) => {
-  return async (dispatch: Dispatch) => {
-    // console.warn(data, add);
-    try {
-      const res = await axios({
-        url: '/api/atoms',
-        method: 'DELETE',
-        data
-      });
-      dispatch({ data: res.data, type: AnalysisActionTypes.REMOVE_ATOM_DATA });
-      return res.data;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-};

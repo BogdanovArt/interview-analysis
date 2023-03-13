@@ -22,9 +22,9 @@ db.once('open', function () {
   app.put('/api/projects/:id', (req, res) => api.changeProject({ req, res, models }));
   app.put('/api/interviews/:id', (req, res) => api.changeInterview({ req, res, models }));
   app.put('/api/interviews', (req, res) => api.putInterview({ req, res, models }));
-  app.put('/api/atoms', (req, res) => api.putAtom({ req, res, models }));
-  app.options('/api/atoms', (req, res) => api.changeAtom({ req, res, models }));
-  app.delete('/api/atoms', (req, res) => api.deleteAtom({ req, res, models }));
+  app.put('/api/atoms', (req, res) => api.putNode({ req, res, models }));
+  app.options('/api/atoms', (req, res) => api.changeNode({ req, res, models }));
+  app.delete('/api/atoms', (req, res) => api.deleteNode({ req, res, models }));
   app.delete('/api/projects', (req, res) => api.deleteProject({ req, res, models }));
   app.delete('/api/interviews', (req, res) => api.deleteInterview({ req, res, models }));
 

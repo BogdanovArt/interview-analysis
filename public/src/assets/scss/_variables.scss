@@ -1,0 +1,51 @@
+$border: 1px solid white;
+$text-color: var(--text-color);
+$text-secondary: var(--text-secondary);
+$hint-color: var(--hint-color);
+$accent-color: var(--accent-color);
+$bg-color: var(--bg-primary);
+$bg-secondary: var(--bg-secondary);
+$bg-tetriary: var(--bg-tetriary);
+$light: #fff;
+$icon-menu: var(--icon-menu);
+$icon-filter: var(--icon-filter);
+$icon-active: var(--icon-filter-active);
+$special: var(--accent-color);
+$special-hover: var(--special-hover);
+$comet: #5E5E82;
+$comet-opaque: #5e5e8220;
+$hover-color:#2572bf;
+$active-color:#155EE1;
+$border-color: var(--border-color);
+$border-hover: var(--border-hover);
+$disabled-color: #f0f0f0;
+$warning-color: #EB5233;
+$warning-hover: #e25757;
+$success: #2ca514;
+$table-header: #f4f4f4;
+$shadow-main: var(--shadow-primary);
+$shadow-card: 0 3px 4px -1px rgba(0, 0, 0, 0.15);
+$overlay: rgba(0, 0, 0, 0.25);
+
+$placeholder: var(--placeholder);
+
+$main-dimension: 40px;
+$inputw: 270px;
+$trns: 0.2s;
+
+$main-font: 'Inter', 'Roboto', Helvetica, sans-serif;
+$title-font: 'Montserrat', 'Roboto', arial, sans-serif;
+
+$title-font-size: 28px;
+$main-font-size: 14px;
+
+$green: #68a702;
+$red: #ca3b13;
+$orange: #f58e0e;
+$blue: #1083d4;
+
+$xs: 400px;
+$sm: 568px;
+$md: 768px;
+$lg: 992px;
+$xl: 1264px;

@@ -1,0 +1,22 @@
+@import "assets/scss/variables";
+
+.Breadcrumbs {
+  display: flex;
+  gap: 5px;
+  user-select: none;
+  &Item {
+    color: $accent-color;
+    text-decoration: none;
+    cursor: pointer;
+    &Dimmed {
+      color: $text-color;
+      cursor: default;
+    }
+    &:not(:last-child) {
+      &:after {
+        content: ">";
+        margin: 0 0 0 5px;
+      }
+    }
+  }
+}

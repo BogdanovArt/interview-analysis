@@ -1,66 +1,44 @@
-import {Reducer} from 'redux';
-import {AnalysisActionTypes, ReportActions,} from './actions';
-import {AtomI, TextBlockI} from 'routes/Analysis/interfaces';
-import {IProjectData} from 'store/projects';
+import { PayloadAction } from "@reduxjs/toolkit";
+import { AtomSchema, TextBlockSchema } from "store/projects/types";
 
-export interface AnalysisDataI {
-  blocks: TextBlockI[];
-  atoms: AtomI[];
-}
-export interface IAnalysisState {
-  _id?: string;
-  title?: string;
-  content: AnalysisDataI;
-  project_id?: IProjectData;
-}
+import { AnalysisState, AnalysisContent, AnalysisSchema } from "./types";
 
-const initialReportState: IAnalysisState = {
-  content: {
-    blocks: [],
-    atoms: []
+const cloneWrapper = (
+  state: AnalysisState,
+  modifier: (content: AnalysisContent) => void
+) => {
+  const content = JSON.parse(JSON.stringify(state.content));
+  modifier(content);
+  return content;
+};
+
+const reducers = {
+  setAnalysis: (
+    state: AnalysisState,
+    action: PayloadAction<AnalysisSchema>
+  ) => {
+    const { content, _id, project_id, title } = action.payload;
+    state.interview = { _id, project_id, title };
+    state.content = content;
+  },
+  setAnalysisContent: (
+    state: AnalysisState,
+    action: PayloadAction<AnalysisContent>
+  ) => {
+    state.content = action.payload;
+  },
+  setTextBlock: (
+    state: AnalysisState,
+    action: PayloadAction<TextBlockSchema>
+  ) => {
+    const modifier = (content: AnalysisContent) => {
+      content.text = action.payload;
+    };
+    state.content = cloneWrapper(state, modifier);
+  },
+  setFetching: (state: AnalysisState, action: PayloadAction<boolean>) => {
+    state.fetching = action.payload;
   },
 };
 
-export const analysisReducer: Reducer<IAnalysisState, ReportActions> = (
-  state = initialReportState,
-  action
-) => {
-  const clone: IAnalysisState = JSON.parse(JSON.stringify(state));
-  switch (action.type) {
-    case AnalysisActionTypes.SET_ANALYSIS_DATA: {
-      return {
-        ...clone,
-        ...action.data
-      };
-    }
-    case AnalysisActionTypes.SET_ATOM_DATA: {
-      const existing = clone.content.atoms.findIndex((atom: AtomI) => atom._id === action.data._id);
-      if (existing !== -1) {
-        clone.content.atoms[existing] = action.data;
-      } else {
-        clone.content.atoms.push(action.data);
-      }
-      return { ...clone };
-    }
-    case AnalysisActionTypes.REMOVE_ATOM_DATA: {
-      if (action.data.deleted) {
-        const index = clone.content.atoms.findIndex((el) => el._id === action.data._id);
-        clone.content.atoms.splice(index, 1);
-      }
-      return { ...clone };
-    }
-    case AnalysisActionTypes.SET_TEXT_BLOCK_DATA: {
-      const id = action.data.id as number;
-      clone.content.blocks[id] = action.data;
-      return { ...clone };
-    }
-    case AnalysisActionTypes.FETCH_DATA: {
-      return {
-        ...state,
-        isFetching: action.isFetching
-      }
-    }
-    default:
-      return state;
-  }
-};
+export default reducers;

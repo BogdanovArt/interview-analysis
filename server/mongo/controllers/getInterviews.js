@@ -1,7 +1,6 @@
-const getInterviews = ({ req, res, models }) => {
-  models.Interview.find({ project_id: null }).exec(function (err, data) {
-    res.status(200).send(JSON.stringify(data));
-  });
+const getInterviews = async ({ req, res, models }) => {
+  const Interviews = await models.Interview.find({ project_id: null });
+  res.status(200).send(JSON.stringify(Interviews));
 }
 
 exports.getInterviews = getInterviews;

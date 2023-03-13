@@ -1,96 +1,45 @@
-import {ActionCreator, Dispatch} from 'redux';
-import {ThunkAction} from 'redux-thunk';
-import axios from 'axios';
+import axios from "axios";
 
-import {IProjectData, IProjectsState} from './reducers';
+import { setProjectsData } from ".";
+import { AppThunk } from "..";
 
-export enum ProjectActionTypes {
-  GET_PROJECTS = 'GET_PROJECTS',
-  ADD_PROJECT = 'ADD_PROJECT',
-  DELETE_PROJECT = 'DELETE_PROJECT',
-  CHANGE_PROJECT = 'CHANGE_PROJECT',
-  FETCHING = 'FETCHING',
-}
+import { AddPayload, EditPayload, RemovePayload } from "./types";
 
-export interface IAddProject {
-  type: ProjectActionTypes.ADD_PROJECT;
-  name: string;
-}
+import { routes } from "routes/enums";
+import getApiUrl from "utils/getApiUrl";
+import { RequestMethods } from "types/enums";
 
-export interface IDeleteProject {
-  type: ProjectActionTypes.DELETE_PROJECT;
-  id: string;
-}
-
-export interface IChangeProject {
-  type: ProjectActionTypes.CHANGE_PROJECT;
-  id: string;
-}
-
-export interface IGetProjectData {
-  type: ProjectActionTypes.GET_PROJECTS;
-  data: IProjectData[];
-}
-
-export interface IFetching {
-  type: ProjectActionTypes.FETCHING;
-  isFetching: boolean;
-}
-
-export type ProjectActions = IGetProjectData | IFetching | IDeleteProject | IChangeProject;
-
-export const getProjectsData: ActionCreator<ThunkAction<Promise<any>, IProjectsState, null, IGetProjectData>> = () => {
-  return async (dispatch: Dispatch) => {
-    try {
-      const { data } = await axios.get('/api/projects');
-      dispatch({ data, type: ProjectActionTypes.GET_PROJECTS });
-    } catch (err) {
-      console.error(err);
-    }
-  };
+export const requestProjects = (): AppThunk => async (dispatch) => {
+  const { data } = await axios.get(getApiUrl(routes.projects));
+  if (data) dispatch(setProjectsData(data));
 };
 
-export const deleteProject: ActionCreator<ThunkAction<Promise<any>, IProjectsState, null, IDeleteProject>> = (id: string) => {
-  return async () => {
-    try {
-      await axios({
-        url: '/api/projects',
-        method: 'DELETE',
-        data: {
-          id
-        }
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-};
-
-export const changeProject: ActionCreator<ThunkAction<Promise<any>, IProjectsState, null, IChangeProject>> = (id: string, name: string) => {
-  return async () => {
-    try {
-      await axios({
-        url: '/api/projects/' + id,
-        method: 'PUT',
-        data: {
-          id,
-          name
-        }
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-};
-
-export const addProject: ActionCreator<ThunkAction<Promise<any>, IProjectsState, null, IAddProject>> = (name: string) => {
-  return async () => {
-    return axios({
-      url: '/api/projects',
-      method: 'PUT',
-      data: {
-        name
-      }
+export const addProject =
+  (payload: AddPayload): AppThunk =>
+  async () => {
+    await axios({
+      url: getApiUrl(routes.projects),
+      method: RequestMethods.PUT,
+      data: payload,
     });
   };
-};
+
+export const removeProject =
+  (payload: RemovePayload): AppThunk =>
+  async () => {
+    await axios({
+      url: getApiUrl(routes.projects),
+      method: RequestMethods.DELETE,
+      data: payload,
+    });
+  };
+
+export const editProject =
+  (payload: EditPayload): AppThunk =>
+  async () => {
+    await axios({
+      url: getApiUrl(routes.project.replace(":project", payload.id)),
+      method: RequestMethods.PUT,
+      data: payload,
+    });
+  };

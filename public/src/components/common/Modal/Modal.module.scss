@@ -1,0 +1,55 @@
+@import "assets/scss/variables";
+
+.Header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.Container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  color: $text-color;
+}
+
+.Overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.Content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 30px;
+  max-width: 560px;
+  padding: 20px 25px;
+  border-radius: 6px;
+  background: $bg-color;
+  z-index: 2;
+}
+
+.Close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $warning-color;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+  margin-left: 10px;
+  svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+  }
+}

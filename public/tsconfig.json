@@ -1,24 +1,24 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "baseUrl": "src",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "outDir": "./dist/",
+    "preserveConstEnums": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
+    "removeComments": true,
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react"
+    "sourceMap": true,
+    "target": "es5",
+    "baseUrl": "./src/",
+    "paths": {
+      "store/*": ["store/*"],
+      "assets/*": ["assets/*"],
+      "utils/*": ["utils/*"],
+      "types/*": ["types/*"],
+      "routes/*": ["routes/*"],
+      "components/*": ["components/*"],
+    }
   },
   "include": [
     "src"

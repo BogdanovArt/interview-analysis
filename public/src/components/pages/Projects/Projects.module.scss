@@ -1,0 +1,21 @@
+@import "assets/scss/variables";
+
+.Projects {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  button {
+    display: flex;
+    gap: 10px;
+    align-self: flex-start;
+  }
+  &List {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 600px;
+  }
+  &Title {
+    font-size: 32px;
+  }
+}

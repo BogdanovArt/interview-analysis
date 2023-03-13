@@ -1,87 +1,55 @@
-import {ActionCreator, Dispatch} from 'redux';
-import {ThunkAction} from 'redux-thunk';
-import axios from 'axios';
+import axios from "axios";
 
-import {IInterviewState} from './reducers';
-import {AnalysisDataI} from '../analysis';
+import { AppThunk } from "..";
+import { setInterviewsData } from ".";
 
-export enum InterviewActionTypes {
-  GET_INTERVIEWS_DATA = 'GET_INTERVIEWS_DATA',
-  DELETE_INTERVIEW = 'DELETE_INTERVIEW',
-  FETCH_DATA = 'FETCH_DATA',
-}
+import { routes } from "routes/enums";
 
-export interface IDeleteInterview {
-  type: InterviewActionTypes.DELETE_INTERVIEW;
-  id: string;
-}
+import getApiUrl from "utils/getApiUrl";
+import { RequestMethods } from "types/enums";
+import { AddPayload, EditPayload, RemovePayload } from "./types";
+import { InterviewSchema } from "store/interviews/types";
 
-export interface IGetInterviewsData {
-  type: InterviewActionTypes.GET_INTERVIEWS_DATA;
-  data: IInterviewState;
-}
-
-export interface IFetchData {
-  type: InterviewActionTypes.FETCH_DATA;
-  isFetching: boolean;
-}
-
-export type InterviewActions = IGetInterviewsData | IFetchData | IDeleteInterview;
-
-export const getInterviewsData: ActionCreator<ThunkAction<Promise<any>, IInterviewState, null, IGetInterviewsData>> = (id: string) => {
-  return async (dispatch: Dispatch) => {
-    try {
-      const { data } = await axios.get('/api/projects/' + id);
-      dispatch({ data, type: InterviewActionTypes.GET_INTERVIEWS_DATA });
-    } catch (err) {
-      console.error(err);
-    }
+export const requestInterviews =
+  ({ id }: { id: string }): AppThunk =>
+  async (dispatch) => {
+    const { data } = await axios.get(
+      getApiUrl(routes.project.replace(":project", id))
+    );
+    if (data) dispatch(setInterviewsData(data));
   };
-};
 
-export const deleteInterview: ActionCreator<ThunkAction<Promise<any>, IInterviewState, null, IDeleteInterview>> = (id: string) => {
-  return async () => {
-    try {
-      await axios({
-        url: '/api/interviews',
-        method: 'DELETE',
-        data: {
-          id
-        }
-      });
-    } catch (err) {
-      console.error(err);
-    }
+export const requestUnbound =
+  (): AppThunk<Promise<{ data: InterviewSchema[] }>> => async () => {
+    return await axios.get(getApiUrl(routes.interviews));
   };
-};
 
-export const changeInterview: ActionCreator<ThunkAction<Promise<any>, IInterviewState, null, IDeleteInterview>> = (id: string, data: any) => {
-  return async () => {
-    try {
-      await axios({
-        url: '/api/interviews/' + id,
-        method: 'PUT',
-        data
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-};
-
-export const createInterview: ActionCreator<ThunkAction<Promise<any>, IInterviewState, null, IDeleteInterview>> = (
-  { project_id, title, content}:
-  { project_id: string; title: string; content: AnalysisDataI }
-) => {
-  return async () => {
-    return axios({
-      url: '/api/interviews',
-      method: 'PUT',
-      data: {
-        title,
-        content,
-        project_id
-      }
+export const addInterview =
+  (payload: AddPayload): AppThunk =>
+  async () => {
+    await axios({
+      url: getApiUrl("/interviews"),
+      method: RequestMethods.PUT,
+      data: payload,
     });
   };
-};
+
+export const removeInterview =
+  (payload: RemovePayload): AppThunk =>
+  async () => {
+    await axios({
+      url: getApiUrl("/interviews"),
+      method: RequestMethods.DELETE,
+      data: payload,
+    });
+  };
+
+export const editInterview =
+  (payload: EditPayload): AppThunk =>
+  async () => {
+    await axios({
+      url: getApiUrl(`/interviews/${payload.id}`),
+      method: RequestMethods.PUT,
+      data: payload.interview,
+    });
+  };

@@ -1,0 +1,60 @@
+@import "assets/scss/variables";
+
+.Wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  user-select: none;
+  gap: 10px;
+}
+.Reverse {
+  flex-direction: row-reverse;
+}
+.Box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: 2px solid $hint-color;
+  cursor: pointer;
+}
+
+.Big {
+  padding: 1px;
+  .Dot {
+    width: 11px;
+    min-width: 11px;
+    height: 11px;
+    min-height: 11px;
+  }
+}
+
+.Dot {
+  display: block;
+  width: 10px;
+  min-width: 10px;
+  height: 10px;
+  min-height: 10px;
+  opacity: 0;
+}
+
+.Label {
+  color: $text-color;
+  font-size: 14px;
+}
+
+.Active {
+  background: $accent-color;
+  border-color: $accent-color;
+  .Dot {
+    opacity: 1;
+  }
+}
+
+.Disabled {
+  &.Active {    
+    background: $hint-color;
+    border-color: $hint-color;
+  }
+  pointer-events: none;
+}

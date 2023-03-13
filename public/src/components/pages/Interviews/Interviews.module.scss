@@ -1,0 +1,31 @@
+@import "assets/scss/variables";
+
+.Interviews {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  &Title {
+    font-size: 32px;
+  }
+  &List {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 600px;
+  }
+  &Controls {
+    display: flex;
+    gap: 20px;
+  }
+  button {
+    display: flex;
+    gap: 10px;
+  }
+  &Unbound {
+    font-size: 16px;
+    cursor: pointer;
+    &:hover {
+      color: $accent-color;
+    }
+  }
+} 

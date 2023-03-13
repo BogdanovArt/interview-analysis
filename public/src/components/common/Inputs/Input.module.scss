@@ -1,0 +1,73 @@
+@import "assets/scss/variables";
+.Container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  label {
+    margin-bottom: 4px;
+  }
+}
+.Wrapper {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  transition: border 0.1s;
+  &:hover {
+    border-color: $border-hover;
+  }
+}
+.Focus {
+  border-color: $accent-color !important;
+}
+.Input {
+  width: 100%;
+  color: $text-color;
+  padding: 14px;
+  background: $bg-color;
+  border-radius: 6px;
+  border: none;
+  &::placeholder {
+    // text-align: center;
+    color: $placeholder;
+  }
+  &:focus {
+    outline: none;
+    border-color: $accent-color;
+  }
+  &Before {
+    padding-left: 0;
+  }
+  &After {
+    padding-right: 0;
+  }
+  &Centered {
+    &::placeholder {
+      text-align: center;
+    }
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
+  caret-color: $text-color !important;
+  -webkit-text-fill-color: $text-color;
+  -webkit-box-shadow: 0 0 0px 1000px $bg-color inset;
+}
+
+// input:autofill {  
+//   border: none;
+//   border-radius: 6px;
+//   color: $text-color !important;
+//   -webkit-text-fill-color: $text-color;
+//   -webkit-box-shadow: 0 0 0px 1000px $bg-color inset;
+// }
+
+.Before,
+.After {
+}
+
+.Dimmed {
+  border-color: transparent !important;
+}

@@ -9,8 +9,8 @@ const deleteProject = async ({ req, res, models }) => {
       interview.project_id = null;
       await interview.save();
     });
-    res.status(200).send({ success: true, ...project });
     await project.deleteOne();
+    res.status(200).send({ success: true });
   } catch (err) {
     console.log(err);
     res.status(500).send('error deleting project');

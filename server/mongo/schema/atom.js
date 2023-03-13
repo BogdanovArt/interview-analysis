@@ -1,4 +1,4 @@
-module.exports = function(mongoose) {
+module.exports = function (mongoose) {
   const Schema = mongoose.Schema;
 
   const AtomSchema = {
@@ -7,16 +7,20 @@ module.exports = function(mongoose) {
     created: { type: Date, default: Date.now() },
     interview_id: {
       type: Schema.Types.ObjectId,
-      ref: 'Interview'
+      ref: "Interview",
     },
-    text_block_ids: [String]
+    nodes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "AtomNode",
+      },
+    ],
   };
 
   const Atom = new Schema(AtomSchema);
 
   return {
     Atom,
-    AtomSchema
-  }
-}
-
+    AtomSchema,
+  };
+};

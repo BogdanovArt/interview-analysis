@@ -1,37 +1,11 @@
-import {Reducer} from 'redux';
+import { PayloadAction } from "@reduxjs/toolkit";
 
-import {AtomI} from 'routes/Analysis/interfaces';
+import { ProjectSchema, ProjectsState } from "./types";
 
-import {IInterviewData} from '../interviews';
-import {ProjectActions, ProjectActionTypes} from "./actions";
-
-export interface IProjectsState {
-  data: IProjectData[];
-}
-
-export interface IProjectData {
-  _id: string;
-  name: string;
-  created: Date;
-  interviews: IInterviewData[];
-  atoms: AtomI[];
-}
-
-const initialProjectsState: IProjectsState = {
-  data: [],
+const reducers = {
+  setProjectsData: (state: ProjectsState, action: PayloadAction<ProjectSchema[]>) => {
+    state.data = action.payload;
+  },
 };
 
-export const projectsReducer: Reducer<IProjectsState, ProjectActions> = (
-  state = initialProjectsState,
-  action
-) => {
-  const clone: IProjectsState = JSON.parse(JSON.stringify(state));
-  switch (action.type) {
-    case ProjectActionTypes.GET_PROJECTS: {
-      clone.data = action.data;
-      return clone;
-    }
-    default:
-      return state;
-  }
-};
+export default reducers;

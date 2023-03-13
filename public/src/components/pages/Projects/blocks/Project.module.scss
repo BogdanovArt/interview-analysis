@@ -1,0 +1,27 @@
+@import "assets/scss/variables";
+
+.Project {
+  display: flex;
+  padding: 5px 15px;
+  transition: transform $trns;
+  &:hover {
+    transform: translateX(5px);
+    cursor: pointer;
+  }
+  &Title {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1 1 0;
+    min-width: 0;
+    text-decoration: none;
+    color: $text-color;
+    > div {
+      width: 100%;
+      font-size: 16px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}

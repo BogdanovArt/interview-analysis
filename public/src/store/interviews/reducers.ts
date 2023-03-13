@@ -1,35 +1,11 @@
-import {Reducer} from 'redux';
-import {InterviewActions, InterviewActionTypes} from './actions';
-import {AnalysisDataI} from '../analysis';
+import { PayloadAction } from "@reduxjs/toolkit";
 
-export interface IInterviewState {
-  _id?:  string;
-  name?: string;
-  created?: Date;
-  project_id?: string;
-  interviews: IInterviewData[];
-}
+import { InterviewsState, ProjectData } from "./types";
 
-export interface IInterviewData {
-  _id?: string;
-  date?: string;
-  title?: string;
-  content: AnalysisDataI;
-}
-
-const initialInterviewsState: IInterviewState = {
-  interviews: [],
+const reducers = {
+  setInterviewsData: (state: InterviewsState, action: PayloadAction<ProjectData | null>) => {
+    state.project = action.payload;
+  },
 };
 
-export const interviewsReducer: Reducer<IInterviewState, InterviewActions> = (
-  state = initialInterviewsState,
-  action
-) => {
-  switch (action.type) {
-    case InterviewActionTypes.GET_INTERVIEWS_DATA: {
-      return action.data;
-    }
-    default:
-      return state;
-  }
-};
+export default reducers;

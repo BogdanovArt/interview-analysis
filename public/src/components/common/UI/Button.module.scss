@@ -1,0 +1,34 @@
+@import "assets/scss/variables";
+
+.Button {
+  border: 1px solid black;
+  border-radius: 6px;
+  padding: 0 23px;
+  height: 45px;
+  font-family: $main-font;
+  color: $text-color;
+  font-weight: 600;
+  background: $bg-color;
+  border-color: $border-color;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &:hover {}
+  &Dark {
+    color: $light;
+    background: $accent-color;
+    border-color: $accent-color;
+  }
+  &Error {
+    background: $warning-color;
+    border-color: $warning-color;
+  }
+  &:disabled {
+    background-color: $bg-tetriary;
+    border-color: $bg-tetriary;
+  }
+  &Big {
+
+  }
+}

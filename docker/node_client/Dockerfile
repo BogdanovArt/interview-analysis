@@ -1,4 +1,4 @@
-FROM node:10.8.0
+FROM reg.netex.pro/node/node:12.22.7
 
 ARG server_uid
 
